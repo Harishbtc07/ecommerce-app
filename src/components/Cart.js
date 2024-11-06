@@ -39,7 +39,6 @@ const Cart = ({ decreaseCartCount }) => {
         }
       });
   };
-
   return (
     <div className="cart-container">
       <h2 className="cart-title">My Cart</h2>

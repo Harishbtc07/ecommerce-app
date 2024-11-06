@@ -54,7 +54,6 @@ def get_products():
     products = cursor.fetchall()
     cursor.close()
     
-    # Format the products into a list of dictionaries for easier consumption on the frontend
     product_list = [
         {
             'id': product[0],
@@ -68,17 +67,14 @@ def get_products():
     
     return jsonify({'success': True, 'products': product_list})
 
-# Get product by ID (for Product Details page)
+# Get product by ID
 @app.route('/products/<int:id>', methods=['GET'])
 def get_product_by_id(id):
     cursor = mysql.connection.cursor()
-    
-    # Select product by ID
     cursor.execute("SELECT id, name, image_url, price, description FROM products WHERE id = %s", (id,))
     product = cursor.fetchone()
     cursor.close()
     
-    # If product exists, return its details
     if product:
         product_details = {
             'id': product[0],
@@ -89,8 +85,100 @@ def get_product_by_id(id):
         }
         return jsonify({'success': True, 'product': product_details})
     
-    # If no product is found
     return jsonify({'success': False, 'message': 'Product not found'}), 404
+
+# Add to Wishlist
+@app.route('/wishlist/add', methods=['POST'])
+def add_to_wishlist():
+    data = request.json
+    user_id = data['user_id']
+    product_id = data['product_id']
+
+    cursor = mysql.connection.cursor()
+    cursor.execute("INSERT INTO wishlist (user_id, product_id) VALUES (%s, %s)", (user_id, product_id))
+    mysql.connection.commit()
+    cursor.close()
+
+    return jsonify({'success': True, 'message': 'Product added to wishlist'})
+
+# Remove from Wishlist
+@app.route('/wishlist/remove', methods=['POST'])
+def remove_from_wishlist():
+    data = request.json
+    user_id = data['user_id']
+    product_id = data['product_id']
+
+    cursor = mysql.connection.cursor()
+    cursor.execute("DELETE FROM wishlist WHERE user_id = %s AND product_id = %s", (user_id, product_id))
+    mysql.connection.commit()
+    cursor.close()
+
+    return jsonify({'success': True, 'message': 'Product removed from wishlist'})
+
+# Get Wishlist Items
+@app.route('/wishlist/<int:user_id>', methods=['GET'])
+def get_wishlist(user_id):
+    cursor = mysql.connection.cursor()
+    cursor.execute("SELECT p.id, p.name, p.image_url, p.price FROM wishlist w JOIN products p ON w.product_id = p.id WHERE w.user_id = %s", (user_id,))
+    wishlist_items = cursor.fetchall()
+    cursor.close()
+
+    product_list = [
+        {'id': item[0], 'name': item[1], 'image_url': item[2], 'price': item[3]}
+        for item in wishlist_items
+    ]
+    
+    return jsonify({'success': True, 'wishlist': product_list})
+
+# Add to Cart
+@app.route('/cart/add', methods=['POST'])
+def add_to_cart():
+    data = request.json
+    user_id = data['user_id']
+    product_id = data['product_id']
+    quantity = data.get('quantity', 1)
+
+    cursor = mysql.connection.cursor()
+    cursor.execute("SELECT * FROM cart WHERE user_id = %s AND product_id = %s", (user_id, product_id))
+    item = cursor.fetchone()
+    
+    if item:
+        cursor.execute("UPDATE cart SET quantity = quantity + %s WHERE user_id = %s AND product_id = %s", (quantity, user_id, product_id))
+    else:
+        cursor.execute("INSERT INTO cart (user_id, product_id, quantity) VALUES (%s, %s, %s)", (user_id, product_id, quantity))
+    mysql.connection.commit()
+    cursor.close()
+
+    return jsonify({'success': True, 'message': 'Product added to cart'})
+
+# Remove from Cart
+@app.route('/cart/remove', methods=['POST'])
+def remove_from_cart():
+    data = request.json
+    user_id = data['user_id']
+    product_id = data['product_id']
+
+    cursor = mysql.connection.cursor()
+    cursor.execute("DELETE FROM cart WHERE user_id = %s AND product_id = %s", (user_id, product_id))
+    mysql.connection.commit()
+    cursor.close()
+
+    return jsonify({'success': True, 'message': 'Product removed from cart'})
+
+# Get Cart Items
+@app.route('/cart/<int:user_id>', methods=['GET'])
+def get_cart(user_id):
+    cursor = mysql.connection.cursor()
+    cursor.execute("SELECT p.id, p.name, p.image_url, p.price, c.quantity FROM cart c JOIN products p ON c.product_id = p.id WHERE c.user_id = %s", (user_id,))
+    cart_items = cursor.fetchall()
+    cursor.close()
+
+    cart_list = [
+        {'id': item[0], 'name': item[1], 'image_url': item[2], 'price': item[3], 'quantity': item[4]}
+        for item in cart_items
+    ]
+    
+    return jsonify({'success': True, 'cart': cart_list})
 
 if __name__ == '__main__':
     app.run(debug=True)
