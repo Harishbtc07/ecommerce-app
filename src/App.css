@@ -296,3 +296,193 @@ body {
     margin-bottom: 20px;
   }
 }
+
+.cart-img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+
+.nav-item .badge {
+  position: relative;
+  top: -10px;
+  right: 10px;
+}
+
+.icon {
+  font-size: 1.5rem;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.icon:hover {
+  color: #007bff;
+}
+
+
+
+
+
+.wishlist-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.wishlist-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.wishlist-item {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding: 15px 0;
+}
+
+.item-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 20px;
+}
+
+.item-details {
+  flex: 1;
+}
+
+.item-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: #555;
+}
+
+.item-price {
+  font-size: 16px;
+  color: #888;
+}
+
+.remove-button {
+  padding: 6px 12px;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.remove-button:hover {
+  background-color: #e63939;
+}
+
+.empty-message {
+  text-align: center;
+  color: #777;
+  font-size: 18px;
+}
+
+
+
+
+
+
+
+.cart-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cart-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding: 15px 0;
+}
+
+.item-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 20px;
+}
+
+.item-details {
+  flex: 1;
+}
+
+.item-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: #555;
+}
+
+.item-price,
+.item-quantity {
+  font-size: 16px;
+  color: #888;
+}
+
+.remove-button {
+  padding: 6px 12px;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.remove-button:hover {
+  background-color: #e63939;
+}
+
+.empty-message {
+  text-align: center;
+  color: #777;
+  font-size: 18px;
+}
+
+
+
+.message {
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 4px;
+  background-color: #dff0d8;
+  color: #3c763d;
+  font-size: 16px;
+  text-align: center;
+}
+
+.message.error {
+  background-color: #f2dede;
+  color: #a94442;
+}
+
+
+
+

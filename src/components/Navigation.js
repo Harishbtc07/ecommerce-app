@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { FaHeart, FaShoppingCart } from 'react-icons/fa';
 
-const Navigation = ({ isAuthenticated, setIsAuthenticated }) => {
+const Navigation = ({ isAuthenticated, setIsAuthenticated, wishlistCount, cartCount }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -27,6 +28,18 @@ const Navigation = ({ isAuthenticated, setIsAuthenticated }) => {
               <>
                 <li className="nav-item">
                   <Link className="nav-link" to="/products">Products</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/wishlist">
+                    <FaHeart />
+                    {wishlistCount > 0 && <span className="badge bg-danger">{wishlistCount}</span>}
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/cart">
+                    <FaShoppingCart />
+                    {cartCount > 0 && <span className="badge bg-danger">{cartCount}</span>}
+                  </Link>
                 </li>
                 <li className="nav-item">
                   <button 
