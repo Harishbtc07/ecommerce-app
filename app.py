@@ -9,7 +9,7 @@ app.config.from_object(Config)
 
 mysql = MySQL(app)
 
-# Register route////////
+# Register route
 @app.route('/register', methods=['POST'])
 def register():
     data = request.json
@@ -179,6 +179,27 @@ def get_cart(user_id):
     ]
     
     return jsonify({'success': True, 'cart': cart_list})
+
+
+#buynow
+@app.route('/buy_now', methods=['POST'])
+def buy_now():
+    data = request.json
+    product_id = data['product_id']
+    quantity = data.get('quantity', 1)
+
+    cursor = mysql.connection.cursor()
+    cursor.execute("INSERT INTO orders (product_id, quantity, status) VALUES (%s, %s, %s)",
+                   (product_id, quantity, 'Confirmed'))
+    mysql.connection.commit()
+    cursor.close()
+
+    return jsonify({'success': True, 'message': 'Order placed successfully'})
+
+
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
