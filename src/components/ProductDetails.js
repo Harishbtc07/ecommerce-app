@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../App.css'; 
 
 const ProductDetails = ({ updateWishlistCount, updateCartCount }) => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [message, setMessage] = useState('');
+  const navigate = useNavigate(); // Initialize useNavigate for redirection
+
 
   useEffect(() => {
     fetch(`http://localhost:5000/products/${id}`)
@@ -64,6 +67,32 @@ const ProductDetails = ({ updateWishlistCount, updateCartCount }) => {
     return <div className="container">{message}</div>;
   }
 
+  const handleBuyNow = () => {
+    fetch(`http://localhost:5000/buy_now`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        product_id: product.id,  // Product ID from the state
+        quantity: 1,              // Default quantity to 1 (you can modify based on UI input)
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          // Redirect to the order confirmation page
+          navigate('/order-confirmed');
+        } else {
+          setMessage('Failed to place order.');
+        }
+      })
+      .catch(() => setMessage('An error occurred. Please try again.'));
+  };
+
+
+  
+  
   return (
     <div className="container product-details">
       <div className="row">
@@ -80,11 +109,14 @@ const ProductDetails = ({ updateWishlistCount, updateCartCount }) => {
           <p className="product-price">${product.price}</p>
           {message && <p className="message">{message}</p>} 
           <button className="btn btn-primary" onClick={handleAddToCart}>
-            Add to Cart
-          </button>
-          <button className="btn btn-outline-danger" onClick={handleAddToWishlist}>
-            Add to Wishlist
-          </button>
+        Add to Cart
+      </button>
+      <button className="btn btn-outline-danger" onClick={handleAddToWishlist}>
+        Add to Wishlist
+      </button>
+      <button className="btn btn-success" onClick={handleBuyNow}>
+        Buy Now
+      </button>
         </div>
       </div>
     </div>

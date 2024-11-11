@@ -7,8 +7,9 @@ import Register from './components/Register';
 import ProductList from './components/ProductList';
 import ProductDetails from './components/ProductDetails'; 
 import PrivateRoute from './components/PrivateRoute';
-import Wishlist from './components/Wishlist'; // Import Wishlist
-import Cart from './components/Cart'; // Import Cart
+import Wishlist from './components/Wishlist'; 
+import Cart from './components/Cart'; 
+import OrderConfirmed from './components/OrderConfirmed';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -73,6 +74,11 @@ function App() {
             </PrivateRoute>
           }
         />
+
+<Route
+  path="/order-confirmed"
+  element={<OrderConfirmed />}
+/>
       </Routes>
     </div>
   );

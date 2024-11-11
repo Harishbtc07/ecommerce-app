@@ -42,7 +42,7 @@ const Cart = ({ decreaseCartCount }) => {
   return (
     <div className="cart-container">
       <h2 className="cart-title">My Cart</h2>
-      {message && <p className="message">{message}</p>} {/* Display message */}
+      {message && <p className="message">{message}</p>} 
       {cart.length > 0 ? (
         cart.map((item) => (
           <div key={item.id} className="cart-item">
