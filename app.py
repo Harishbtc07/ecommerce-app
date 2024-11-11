@@ -9,7 +9,7 @@ app.config.from_object(Config)
 
 mysql = MySQL(app)
 
-# Register route
+# Register route////////
 @app.route('/register', methods=['POST'])
 def register():
     data = request.json
