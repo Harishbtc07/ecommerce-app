@@ -197,21 +197,6 @@ def buy_now():
     return jsonify({'success': True, 'message': 'Order placed successfully'})
 
 
-# Order Tracking
-@app.route('/track_order/<int:product_id>', methods=['GET'])
-def track_order(product_id):
-    cursor = mysql.connection.cursor()
-    cursor.execute("SELECT status, tracking_details FROM orders WHERE product_id = %s ORDER BY created_at DESC LIMIT 1", (product_id,))
-    order = cursor.fetchone()
-    cursor.close()
-
-    if order:
-        return jsonify({'success': True, 'status': order[0], 'tracking_details': order[1]})
-    return jsonify({'success': False, 'message': 'Order not found'}), 404
-
-
-
-
 
 
 

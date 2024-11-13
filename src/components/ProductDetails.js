@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import '../App.css'; 
 
 const ProductDetails = ({ updateWishlistCount, updateCartCount }) => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [message, setMessage] = useState('');
-  const navigate = useNavigate(); // Initialize useNavigate for redirection
-
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch(`http://localhost:5000/products/${id}`)
@@ -74,15 +72,14 @@ const ProductDetails = ({ updateWishlistCount, updateCartCount }) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        product_id: product.id,  // Product ID from the state
-        quantity: 1,              // Default quantity to 1 (you can modify based on UI input)
+        product_id: product.id,
+        quantity: 1,
       }),
     })
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          // Redirect to the order confirmation page
-          navigate('/order-confirmed');
+          navigate('/order-confirmed', { state: { product } });
         } else {
           setMessage('Failed to place order.');
         }
@@ -90,6 +87,9 @@ const ProductDetails = ({ updateWishlistCount, updateCartCount }) => {
       .catch(() => setMessage('An error occurred. Please try again.'));
   };
 
+  if (!product) {
+    return <div className="container">{message}</div>;
+  }
 
   
   
