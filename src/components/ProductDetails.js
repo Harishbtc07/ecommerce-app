@@ -111,10 +111,10 @@ const ProductDetails = ({ updateWishlistCount, updateCartCount }) => {
           <button className="btn btn-primary" onClick={handleAddToCart}>
         Add to Cart
       </button>
-      <button className="btn btn-outline-danger" onClick={handleAddToWishlist}>
+      <button className="btn btn-danger mt-2" onClick={handleAddToWishlist}>
         Add to Wishlist
       </button>
-      <button className="btn btn-success" onClick={handleBuyNow}>
+      <button className="btn btn-success mt-2 mx-5" onClick={handleBuyNow}>
         Buy Now
       </button>
         </div>
