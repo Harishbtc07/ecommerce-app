@@ -10,6 +10,7 @@ import PrivateRoute from './components/PrivateRoute';
 import Wishlist from './components/Wishlist'; 
 import Cart from './components/Cart'; 
 import OrderConfirmed from './components/OrderConfirmed';
+import Orders from './components/Order';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -98,6 +99,8 @@ function App() {
           path="/order-confirmed"
           element={<OrderConfirmed cancelOrder={cancelOrder} />}
         />
+
+<Route path="/orders" element={<Orders />} />
       </Routes>
     </div>
   );

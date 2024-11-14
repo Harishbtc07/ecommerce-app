@@ -213,6 +213,23 @@ def cancel_order():
 
 
 
+# Get all orders for a specific user
+@app.route('/orders', methods=['GET'])
+def get_orders():
+    cursor = mysql.connection.cursor()
+    cursor.execute("SELECT o.id, p.name, p.image_url, p.price, o.quantity FROM orders o JOIN products p ON o.product_id = p.id")
+    orders = cursor.fetchall()
+    cursor.close()
+
+    order_list = [
+        {'id': order[0], 'product_name': order[1], 'image_url': order[2], 'price': order[3], 'quantity': order[4]}
+        for order in orders
+    ]
+
+    return jsonify({'success': True, 'orders': order_list})
+
+
+
 
 
 

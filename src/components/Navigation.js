@@ -14,12 +14,7 @@ const Navigation = ({ isAuthenticated, setIsAuthenticated, wishlistCount, cartCo
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container">
         <Link className="navbar-brand" to="/">MyStore</Link>
-        <button 
-          className="navbar-toggler" 
-          type="button" 
-          data-bs-toggle="collapse" 
-          data-bs-target="#navbarNav"
-        >
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
@@ -42,10 +37,10 @@ const Navigation = ({ isAuthenticated, setIsAuthenticated, wishlistCount, cartCo
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <button 
-                    className="nav-link btn btn-link" 
-                    onClick={handleLogout}
-                  >
+                  <Link className="nav-link" to="/orders">My Orders</Link> {/* New link to Orders */}
+                </li>
+                <li className="nav-item">
+                  <button className="nav-link btn btn-link" onClick={handleLogout}>
                     Logout
                   </button>
                 </li>

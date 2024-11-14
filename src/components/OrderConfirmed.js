@@ -20,7 +20,7 @@ const OrderConfirmed = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          setMessage('Your order has been successfully canceled.');
+          setMessage('Your order has been successfully canceled.Thank you for shopping.');
           setMessageType('error'); // Set to "error" to display in red
           setProduct(null); // Clear product details after cancellation
         } else {
