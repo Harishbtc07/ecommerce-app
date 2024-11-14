@@ -507,7 +507,7 @@ Button Styles
 .order-confirmed-message {
   text-align: center;
   font-size: 1.2rem;
-  color: #29d323;
+  color: #ee0707;
   margin-bottom: 30px;
 }
 
@@ -555,6 +555,40 @@ Button Styles
 .cancel-order-btn:focus {
   outline: none;
 }
+
+
+
+
+
+
+.order-confirmed-message.success {
+  color: green;
+  font-weight: bold;
+}
+
+.order-confirmed-message.error {
+  color: red;
+  font-weight: bold;
+}
+
+.order-confirmed-title {
+  margin-top: 20px;
+  font-size: 24px;
+}
+
+.order-details {
+  margin-top: 20px;
+}
+
+.product-image {
+  max-width: 200px;
+  margin-top: 10px;
+}
+
+.cancel-order-btn {
+  margin-top: 20px;
+}
+
 
 
 
