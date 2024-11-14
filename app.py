@@ -198,6 +198,22 @@ def buy_now():
 
 
 
+@app.route('/cancel_order', methods=['POST'])
+def cancel_order():
+    data = request.json
+    product_id = data['product_id']  # Use product_id instead of order_id
+
+    # Assuming that the 'orders' table stores 'product_id' and 'id' fields
+    cursor = mysql.connection.cursor()
+    cursor.execute("DELETE FROM orders WHERE product_id = %s", (product_id,))
+    mysql.connection.commit()
+    cursor.close()
+
+    return jsonify({'success': True, 'message': 'Order canceled successfully'})
+
+
+
+
 
 
 

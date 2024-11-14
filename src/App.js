@@ -21,6 +21,26 @@ function App() {
   const decreaseWishlistCount = () => setWishlistCount(prevCount => Math.max(prevCount - 1, 0));
   const decreaseCartCount = () => setCartCount(prevCount => Math.max(prevCount - 1, 0));
 
+  const cancelOrder = async (productId) => {
+    try {
+      const response = await fetch('http://localhost:5000/cancel_order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ product_id: productId }), // Send product_id instead of order_id
+      });
+  
+      const result = await response.json();
+      if (result.success) {
+        alert(result.message);
+        // Additional state updates if needed
+      } else {
+        alert('Failed to cancel the order');
+      }
+    } catch (error) {
+      console.error('Error canceling the order:', error);
+      alert('An error occurred while canceling the order');
+    }
+  };
   return (
     <div className="App">
       <Navigation 
@@ -74,11 +94,10 @@ function App() {
             </PrivateRoute>
           }
         />
-
-<Route
-  path="/order-confirmed"
-  element={<OrderConfirmed />}
-/>
+        <Route
+          path="/order-confirmed"
+          element={<OrderConfirmed cancelOrder={cancelOrder} />}
+        />
       </Routes>
     </div>
   );

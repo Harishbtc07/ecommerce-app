@@ -61,10 +61,6 @@ const ProductDetails = ({ updateWishlistCount, updateCartCount }) => {
       .catch(() => setMessage('An error occurred. Please try again.'));
   };
 
-  if (!product) {
-    return <div className="container">{message}</div>;
-  }
-
   const handleBuyNow = () => {
     fetch(`http://localhost:5000/buy_now`, {
       method: 'POST',
@@ -79,7 +75,8 @@ const ProductDetails = ({ updateWishlistCount, updateCartCount }) => {
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          navigate('/order-confirmed', { state: { product } });
+          // Pass product_id and product details to OrderConfirmed
+          navigate('/order-confirmed', { state: { product, product_id: product.id } });
         } else {
           setMessage('Failed to place order.');
         }
@@ -91,8 +88,6 @@ const ProductDetails = ({ updateWishlistCount, updateCartCount }) => {
     return <div className="container">{message}</div>;
   }
 
-  
-  
   return (
     <div className="container product-details">
       <div className="row">
@@ -109,14 +104,14 @@ const ProductDetails = ({ updateWishlistCount, updateCartCount }) => {
           <p className="product-price">${product.price}</p>
           {message && <p className="message">{message}</p>} 
           <button className="btn btn-primary" onClick={handleAddToCart}>
-        Add to Cart
-      </button>
-      <button className="btn btn-danger mt-2" onClick={handleAddToWishlist}>
-        Add to Wishlist
-      </button>
-      <button className="btn btn-success mt-2 mx-5" onClick={handleBuyNow}>
-        Buy Now
-      </button>
+            Add to Cart
+          </button>
+          <button className="btn btn-danger mt-2" onClick={handleAddToWishlist}>
+            Add to Wishlist
+          </button>
+          <button className="btn btn-success mt-2 mx-5" onClick={handleBuyNow}>
+            Buy Now
+          </button>
         </div>
       </div>
     </div>
