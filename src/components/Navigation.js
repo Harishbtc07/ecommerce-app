@@ -44,6 +44,10 @@ const Navigation = ({ isAuthenticated, setIsAuthenticated, wishlistCount, cartCo
                     Logout
                   </button>
                 </li>
+                <li className="nav-item">
+  <Link className="nav-link" to="/chatbot">Chat Support</Link>
+</li>
+
               </>
             ) : (
               <>
