@@ -2,9 +2,13 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_mysqldb import MySQL
 from config import Config
+import openai
+import logging
 
 app = Flask(__name__)
 CORS(app)
+
+openai.api_key = ""
 app.config.from_object(Config)
 
 mysql = MySQL(app)
@@ -16,8 +20,8 @@ def register():
     name = data['name']
     email = data['email']
     password = data['password']
-    gender = data['gender']  # New field
-    country = data['country']  # New field
+    gender = data['gender']  
+    country = data['country'] 
     interests = ','.join(data['interests'])  # Convert list to string
 
     cursor = mysql.connection.cursor()
@@ -201,9 +205,9 @@ def buy_now():
 @app.route('/cancel_order', methods=['POST'])
 def cancel_order():
     data = request.json
-    product_id = data['product_id']  # Use product_id instead of order_id
+    product_id = data['product_id'] 
 
-    # Assuming that the 'orders' table stores 'product_id' and 'id' fields
+    
     cursor = mysql.connection.cursor()
     cursor.execute("DELETE FROM orders WHERE product_id = %s", (product_id,))
     mysql.connection.commit()
@@ -229,10 +233,35 @@ def get_orders():
     return jsonify({'success': True, 'orders': order_list})
 
 
+logging.basicConfig(level=logging.DEBUG)
 
 
 
 
 
+
+
+
+
+
+
+@app.route('/chatbot', methods=['POST'])
+def chatbot():
+    user_message = request.json.get('message')
+    if not user_message:
+        return jsonify({'error': 'Message is required'}), 400
+    
+    try:
+        response = openai.Completion.create(
+            model="gpt-4",  
+            prompt=user_message,
+            max_tokens=150
+        )
+        chatbot_reply = response.choices[0].text.strip()
+        return jsonify({'reply': chatbot_reply})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    
+    
 if __name__ == '__main__':
     app.run(debug=True)
