@@ -11,6 +11,7 @@ import Wishlist from './components/Wishlist';
 import Cart from './components/Cart'; 
 import OrderConfirmed from './components/OrderConfirmed';
 import Orders from './components/Order';
+import Chatbot from './components/Chatbot';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -27,13 +28,13 @@ function App() {
       const response = await fetch('http://localhost:5000/cancel_order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ product_id: productId }), // Send product_id instead of order_id
+        body: JSON.stringify({ product_id: productId }),
       });
   
       const result = await response.json();
       if (result.success) {
         alert(result.message);
-        // Additional state updates if needed
+        
       } else {
         alert('Failed to cancel the order');
       }
@@ -42,6 +43,7 @@ function App() {
       alert('An error occurred while canceling the order');
     }
   };
+
   return (
     <div className="App">
       <Navigation 
@@ -99,8 +101,11 @@ function App() {
           path="/order-confirmed"
           element={<OrderConfirmed cancelOrder={cancelOrder} />}
         />
-
-<Route path="/orders" element={<Orders />} />
+        <Route path="/orders" element={<Orders />} />
+        <Route 
+          path="/chatbot" 
+          element={<Chatbot />} 
+        />
       </Routes>
     </div>
   );
